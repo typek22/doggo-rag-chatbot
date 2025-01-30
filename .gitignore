@@ -1,0 +1,7 @@
+Lib/
+Scripts/
+pyvenv.cfg
+.idea/
+share/
+etc/
+.env
