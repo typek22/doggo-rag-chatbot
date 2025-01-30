@@ -5,3 +5,5 @@ pyvenv.cfg
 share/
 etc/
 .env
+__pycache__/
+chroma_db
