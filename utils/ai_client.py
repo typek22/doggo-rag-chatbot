@@ -31,61 +31,23 @@ class AIClient:
 
     def get_full_message(self, aug_data, prompt):
         developer_msg = [
-            {"role": "developer",
+            {"role": "system",
              "content":
-                    "You are an assistant for question-answering tasks. "
-                    "Use the following pieces of retrieved context to answer "
-                    "the question. If you don't know the answer, say that you "
-                    "don't know. Use three sentences maximum and keep the "
-                    "answer concise."
-                    "\n\n"
-                    f"{aug_data}"
-             }
-        ]
-        developer_msg = [
-            {"role": "developer",
-             "content":
-                "Given a chat history and the latest user question "
-                "which might reference context in the chat history, "
-                "formulate a standalone question which can be understood "
-                "without the chat history. Do NOT answer the question, "
-                "just reformulate it if needed and otherwise return it as is."
-             }
+                "You don't reveal that you have my data. "
+                "Don't say anything like 'based on information provided.'"
+             },
         ]
         user_msg = [
             {"role": "user",
-             "content": prompt}
+             "content": f"Using this data: '{aug_data}'. Respond to this prompt: '{prompt}'"}
         ]
         return developer_msg + user_msg
 
 
-
-    def get_response(self, aug_data, prompt, prev_messages):
+    def get_response(self, aug_data, prompt):
         if self._client:
             full_message =  self.get_full_message(aug_data, prompt)
-#            messages = prev_messages + full_message
-
-            developer_msg = [
-                {"role": "developer",
-                 "content":
-                     "Given a chat history and the latest user question "
-                     "which might reference context in the chat history, "
-                     "formulate a standalone question which can be understood "
-                     "without the chat history. Do NOT answer the question, "
-                     "just reformulate it if needed and otherwise return it as is."
-                 }
-            ]
-            user_msg = [
-                {"role": "user",
-                 "content": prompt}
-            ]
-
-            messages = developer_msg + prev_messages + user_msg
-
-
-
-
-
+            messages = full_message
 
             logging.info(f"ALL SENT MESSAGES: ```{messages}```")
 

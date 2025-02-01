@@ -1,6 +1,9 @@
 import logging
 import chromadb
 
+EMBEDDING_DISTANCE = 1.4
+NO_RESULTS = 3
+
 class RAGHandler:
     def __init__(self, openai_client, collection_name):
         self.openai_client = openai_client
@@ -35,13 +38,13 @@ class RAGHandler:
         # generate an embedding for the prompt and retrieve the most relevant doc
         response = self.openai_client.embeddings_create(input=prompt)
 
-        n_results = 3
+        n_results = NO_RESULTS
         collection = self.chroma_client.get_collection(name=self.collection_name)
         results = collection.query(
             query_embeddings=[response.data[0].embedding],
             n_results=n_results
         )
-        docs = [doc for doc, dist in zip(results['documents'][0], results['distances'][0]) if dist < 1.4]
+        docs = [doc for doc, dist in zip(results['documents'][0], results['distances'][0]) if dist < EMBEDDING_DISTANCE]
         data = " ".join(docs)
         logging.info(f"Results: {results}")
         if data:
