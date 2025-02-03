@@ -30,24 +30,32 @@ class AIClient:
 
 
     def get_full_message(self, aug_data, prompt):
-        developer_msg = [
-            {"role": "system",
-             "content":
-                "You don't reveal that you have my data. "
-                "Don't say anything like 'based on information provided.'"
-             },
-        ]
+        """Commented out to return only prompt, to showcase simple conversation without RAG"""
+
+        # developer_msg = [
+        #     {"role": "developer",
+        #      "content":
+        #          "You are an assistant for question-answering tasks. "
+        #          "Use the following pieces of retrieved context to answer "
+        #          "the question. If you don't know the answer, say that you "
+        #          "don't know. Use three sentences maximum and keep the "
+        #          "answer concise."
+        #          "\n\n"
+        #          f"{aug_data}"
+        #      }
+        # ]
         user_msg = [
             {"role": "user",
-             "content": f"Using this data: '{aug_data}'. Respond to this prompt: '{prompt}'"}
+             "content": prompt}
         ]
-        return developer_msg + user_msg
+        # return developer_msg + user_msg
+        return user_msg
 
 
-    def get_response(self, aug_data, prompt):
+    def get_response(self, aug_data, prompt, prev_messages):
         if self._client:
             full_message =  self.get_full_message(aug_data, prompt)
-            messages = full_message
+            messages = prev_messages + full_message
 
             logging.info(f"ALL SENT MESSAGES: ```{messages}```")
 
