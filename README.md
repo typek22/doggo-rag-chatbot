@@ -1,4 +1,4 @@
-# Doggo RAG Chatbot
+# Doggo RAG Chatbot 🐶
 A simple streamlit chatbot to showcase functioning of Retrieval Augmented Generation (RAG) and how to integrate it with
 a public LLM to create custom chatbot with a specific knowledge.
 
@@ -6,6 +6,8 @@ I write about this code in my LinkedIn article https://www.linkedin.com/pulse/cr
 
 - 1st article
   - branch "part_1"
+- 2nd article
+  - branch "part_2"
 
 ## Features
 

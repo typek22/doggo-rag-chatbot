@@ -14,7 +14,7 @@ class RAGHandler:
     def initiate_embeddings(self, data):
         try:
             self.chroma_client.delete_collection(self.collection_name)
-        except ValueError: #collection exists
+        except ValueError: #collection does not exist
             pass
         self.collection = self.chroma_client.create_collection(name=self.collection_name)
 
@@ -38,11 +38,10 @@ class RAGHandler:
         # generate an embedding for the prompt and retrieve the most relevant doc
         response = self.openai_client.embeddings_create(input=prompt)
 
-        n_results = NO_RESULTS
         collection = self.chroma_client.get_collection(name=self.collection_name)
         results = collection.query(
             query_embeddings=[response.data[0].embedding],
-            n_results=n_results
+            n_results=NO_RESULTS
         )
         docs = [doc for doc, dist in zip(results['documents'][0], results['distances'][0]) if dist < EMBEDDING_DISTANCE]
         data = " ".join(docs)

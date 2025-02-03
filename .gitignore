@@ -7,3 +7,4 @@ etc/
 .env
 __pycache__/
 chroma_db
+chroma_db/chroma.sqlite3
